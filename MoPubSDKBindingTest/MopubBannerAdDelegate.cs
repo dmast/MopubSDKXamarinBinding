@@ -1,5 +1,5 @@
 using System;
-using MoPubSDK;
+using MoPubSDK_ARMv7;
 using MonoTouch.UIKit;
 
 

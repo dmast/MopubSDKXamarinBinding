@@ -56,6 +56,7 @@
     <MtouchI18n>
     </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -124,9 +125,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\MoPubIOSBinding\MoPubIOSBinding\MoPubIOSBinding.csproj">
-      <Project>{C368FE30-1B16-4E1E-9BA7-13A6D8F74E8D}</Project>
-      <Name>MoPubIOSBinding</Name>
+    <ProjectReference Include="..\MoPubSDK_ARMv7\MoPubSDK_ARMv7.csproj">
+      <Project>{4B8A16B9-D3DE-40BA-8E72-846DCA26D793}</Project>
+      <Name>MoPubSDK_ARMv7</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

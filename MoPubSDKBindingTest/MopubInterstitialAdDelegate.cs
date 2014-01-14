@@ -1,7 +1,7 @@
 using System;
 using MoPubSDKBindingTest;
 using MonoTouch.UIKit;
-using MoPubSDK;
+using MoPubSDK_ARMv7;
 
 namespace MoPubSDKBindingTest
 {

@@ -3,7 +3,7 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
-using MoPubSDK;
+using MoPubSDK_ARMv7;
 namespace MoPubSDKBindingTest
 
 /**
@@ -16,6 +16,8 @@ Banner:
 667d3144231a4e66918b9b05cd27aea8
 Interstitial: 69f51eb881554cea87fe8257d5cb058e
 
+Testing Banner: cdd96554348040eea55a46b59f09a70f
+Testing Interstitial: 90b9f4fe5de244a8a86152d3dbd2256c
 **/
 {
 	public partial class MoPubSDKBindingTestViewController : UIViewController
@@ -60,8 +62,8 @@ Interstitial: 69f51eb881554cea87fe8257d5cb058e
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			LoadInterstitial ();
-			//this.LoadBannerAds ();
+			//LoadInterstitial ();
+			this.LoadBannerAds ();
 		}
 
 	}
