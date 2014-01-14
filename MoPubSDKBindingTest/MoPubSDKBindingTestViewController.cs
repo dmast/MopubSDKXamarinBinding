@@ -49,21 +49,33 @@ Testing Interstitial: 90b9f4fe5de244a8a86152d3dbd2256c
 			this.Add (_mpAdView);
 		}
 
-		void LoadInterstitial()
+		void LoadInterstitial ()
 		{
 			MPInterstitialAdController interstial = new MPInterstitialAdController ();
-			
-			interstial = MPInterstitialAdController.InterstitialAdControllerForAdUnitId(MOPUB_INTERSTITIAL_ADUNIT_ID);
+			interstial = MPInterstitialAdController.InterstitialAdControllerForAdUnitId (MOPUB_INTERSTITIAL_ADUNIT_ID);
 			interstial.Delegate = new MopubInterstitialAdDelegate (this);
 			interstial.LoadAd ();
+		}
+
+		void LoadInterstitialView()
+		{
+			//LoadInterstitial ();
+			var btnLoadInterstital = UIButton.FromType (UIButtonType.RoundedRect);
+			btnLoadInterstital.SetTitle ("Load Interstital", UIControlState.Normal);
+			btnLoadInterstital.Frame = new RectangleF (0, UIScreen.MainScreen.Bounds.Height - 50, 320, 50);
+			btnLoadInterstital.TouchUpInside += delegate {
+				LoadInterstitial();
+			};
+			this.Add (btnLoadInterstital);
+			
 
 
 		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			//LoadInterstitial ();
-			this.LoadBannerAds ();
+			LoadInterstitialView ();
+			//this.LoadBannerAds ();
 		}
 
 	}
