@@ -5,10 +5,15 @@ Binding example with Xamarin and MoPub SDK 1.7
 !!Note, the "Fat" binary binding does not work so you have to include the MoPubSDK_i386.a file for Simulator, 
 and the MoPubSDK_ARMv7.a file for device testing in your main xamarin project
 To use : 
+<br/>
 1) Add a reference to either the MoPubSDK_i386, or MoPubSDK_ARMv7 in your main Xamarin project
+<br/>
 2) Import appropriate name space (MoPubSDK_i386, or MoPubSDK_ARMv7)
-3) Testing code:
-void LoadBannerAds ()
+<br/>
+3) Testing code
+
+
+		void LoadBannerAds ()
 		{
 			// Perform any additional setup after loading the view, typically from a nib.
 			SizeF size = new SizeF (320, 50);
