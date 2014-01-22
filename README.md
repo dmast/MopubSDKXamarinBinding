@@ -2,8 +2,9 @@ MopubSDKXamarinBinding
 ======================
 
 Binding example with Xamarin and MoPub SDK 1.7
-!!Note, the "Fat" binary binding does not work so you have to include the MoPubSDK_i386.a file for Simulator, 
-and the MoPubSDK_ARMv7.a file for device testing in your main xamarin project
+<br/>
+!! Note, due to bugs in Xamarin iOS, the "Fat" binary binding does not work so you have to include the MoPubSDK_i386.a file for Simulator, 
+or the MoPubSDK_ARMv7.a file for device testing in your main xamarin project
 To use : 
 <br/>
 1) Add a reference to either the MoPubSDK_i386, or MoPubSDK_ARMv7 in your main Xamarin project
