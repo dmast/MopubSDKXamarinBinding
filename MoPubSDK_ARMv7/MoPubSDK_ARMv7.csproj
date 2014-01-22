@@ -24,7 +24,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -53,5 +52,11 @@
     <Compile Include="libMoPubSDK-armv7.linkwith.cs">
       <DependentUpon>libMoPubSDK-armv7.a</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\MPAdBrowserController.xib" />
+    <BundleResource Include="Resources\MPCloseButtonX.png" />
+    <BundleResource Include="Resources\MPCloseButtonX%402x.png" />
   </ItemGroup>
 </Project>

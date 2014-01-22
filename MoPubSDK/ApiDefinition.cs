@@ -1,13 +1,62 @@
+//  Created by David Mast on 1/12/2014.
+
+
+
 using System.Drawing;
 using System;
-
 using MonoTouch.Foundation;
-using MonoTouch.CoreLocation;
-using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
-using MonoTouch.SystemConfiguration;
+using MonoTouch.UIKit;
+using MonoTouch.CoreLocation;
+using MonoTouch.CoreVideo;
+using MonoTouch.AVFoundation;
+using MonoTouch.MediaPlayer;
+using MonoTouch.StoreKit;
+using MonoTouch.CoreMedia;
+using MonoTouch.EventKit;
+using MonoTouch.EventKitUI;
 
 namespace MoPubSDK {
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface MPInterstitialCustomEventDelegate {
+
+		[Export ("location")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPInterstitialCustomEventDelegate.h", Line = 34)]
+		CLLocation Location { get; }
+
+		[Export ("interstitialCustomEvent:didLoadAd:")]
+		void DidLoadAd (MPInterstitialCustomEvent customEvent, NSObject ad);
+
+		[Export ("interstitialCustomEvent:didFailToLoadAdWithError:")]
+		void DidFailToLoadAdWithError (MPInterstitialCustomEvent customEvent, NSError error);
+
+		[Export ("interstitialCustomEventDidExpire:")]
+		void InterstitialCustomEventDidExpire (MPInterstitialCustomEvent customEvent);
+
+		[Export ("interstitialCustomEventWillAppear:")]
+		void InterstitialCustomEventWillAppear (MPInterstitialCustomEvent customEvent);
+
+		[Export ("interstitialCustomEventDidAppear:")]
+		void InterstitialCustomEventDidAppear (MPInterstitialCustomEvent customEvent);
+
+		[Export ("interstitialCustomEventWillDisappear:")]
+		void InterstitialCustomEventWillDisappear (MPInterstitialCustomEvent customEvent);
+
+		[Export ("interstitialCustomEventDidDisappear:")]
+		void InterstitialCustomEventDidDisappear (MPInterstitialCustomEvent customEvent);
+
+		[Export ("interstitialCustomEventDidReceiveTapEvent:")]
+		void InterstitialCustomEventDidReceiveTapEvent (MPInterstitialCustomEvent customEvent);
+
+		[Export ("interstitialCustomEventWillLeaveApplication:")]
+		void InterstitialCustomEventWillLeaveApplication (MPInterstitialCustomEvent customEvent);
+
+		[Export ("trackImpression")]
+		void TrackImpression ();
+
+		[Export ("trackClick")]
+		void TrackClick ();
+	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface MPInterstitialCustomEvent {
@@ -18,23 +67,52 @@ namespace MoPubSDK {
 		[Export ("showInterstitialFromRootViewController:")]
 		void ShowInterstitialFromRootViewController (UIViewController rootViewController);
 
-		[Export ("enableAutomaticImpressionAndClickTracking")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPInterstitialCustomEvent.h", Line = 72)]
+		[Export ("enableAutomaticImpressionAndClickTracking")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPInterstitialCustomEvent.h", Line = 72)]
 		bool EnableAutomaticImpressionAndClickTracking { get; }
 
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		MPInterstitialCustomEventDelegate Delegate { get; set; }
 	}
-	/*	*
+
 	[BaseType (typeof (NSObject))]
-	public partial interface MPAdConversionTracker : NSURLConnectionDataDelegate {
+	public partial interface MPReachability {
 
-		[Static, Export ("sharedConversionTracker")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdConversionTracker.h", Line = 38)]
-		MPAdConversionTracker SharedConversionTracker { get; }
+		[Static, Export ("reachabilityForLocalWiFi")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/Internal/Utility/MPReachability.h", Line = 58)]
+		MPReachability ReachabilityForLocalWiFi { get; }
 
-		[Export ("reportApplicationOpenForApplicationID:")]
-		void ReportApplicationOpenForApplicationID (string appID);
+		[Export ("hasWifi")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/Internal/Utility/MPReachability.h", Line = 59)]
+		bool HasWifi { get; }
 	}
-	**/
+
+	[BaseType (typeof (NSObject))]
+	public partial interface MRVideoPlayerManager {
+
+		[Export ("delegate", ArgumentSemantic.Assign)]
+		MRVideoPlayerManagerDelegate Delegate { get; set; }
+
+		[Export ("initWithDelegate:")]
+		IntPtr Constructor (MRVideoPlayerManagerDelegate mr_delegate);
+
+		[Export ("playVideo:")]
+		void PlayVideo (NSDictionary parameters);
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface MRVideoPlayerManagerDelegate {
+
+		[Export ("viewControllerForPresentingVideoPlayer")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/Internal/MRAID/MRVideoPlayerManager.h", Line = 20)]
+		UIViewController ViewControllerForPresentingVideoPlayer { get; }
+
+		[Export ("videoPlayerManagerWillPresentVideo:")]
+		void VideoPlayerManagerWillPresentVideo (MRVideoPlayerManager manager);
+
+		[Export ("videoPlayerManagerDidDismissVideo:")]
+		void VideoPlayerManagerDidDismissVideo (MRVideoPlayerManager manager);
+
+		[Export ("videoPlayerManager:didFailToPlayVideoWithErrorMessage:")]
+		void DidFailToPlayVideoWithErrorMessage (MRVideoPlayerManager manager, string message);
+	}
+
 
 
 	[BaseType (typeof (UIView))]
@@ -76,10 +154,10 @@ namespace MoPubSDK {
 		[Export ("unlockNativeAdsOrientation")]
 		void UnlockNativeAdsOrientation ();
 
-		[Export ("allowedNativeAdsOrientation")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 173)]
+		[Export ("allowedNativeAdsOrientation")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 173)]
 		MPNativeAdOrientation AllowedNativeAdsOrientation { get; }
 
-		[Export ("adContentViewSize")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 187)]
+		[Export ("adContentViewSize")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 187)]
 		SizeF AdContentViewSize { get; }
 
 		[Export ("stopAutomaticallyRefreshingContents")]
@@ -100,7 +178,7 @@ namespace MoPubSDK {
 		[Export ("customEventActionDidEnd")]
 		void CustomEventActionDidEnd ();
 
-		[Export ("adContentView")]//, Verify ("ObjC method massaged into setter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 265)]
+		[Export ("adContentView")]// ("ObjC method massaged into setter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 265)]
 		UIView AdContentView { set; }
 
 		[Export ("ignoresAutorefresh")]
@@ -110,14 +188,14 @@ namespace MoPubSDK {
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface MPAdViewDelegate {
 
-		[Export ("viewControllerForPresentingModalView")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 310)]
+		[Export ("viewControllerForPresentingModalView")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPAdView.h", Line = 310)]
 		UIViewController ViewControllerForPresentingModalView { get; }
 
 		[Export ("adViewDidLoadAd:")]
 		void AdViewDidLoadAd (MPAdView view);
 
 		[Export ("adViewDidFailToLoadAd:")]
-		void AdViewDidFailToLoadAd (MPAdView view);
+		void adViewDidFailToLoadAd (MPAdView view);
 
 		[Export ("willPresentModalViewForAd:")]
 		void WillPresentModalViewForAd (MPAdView view);
@@ -132,26 +210,26 @@ namespace MoPubSDK {
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface MPBannerCustomEventDelegate {
 
-		[Export ("viewControllerForPresentingModalView")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPBannerCustomEventDelegate.h", Line = 31)]
+		[Export ("viewControllerForPresentingModalView")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPBannerCustomEventDelegate.h", Line = 31)]
 		UIViewController ViewControllerForPresentingModalView { get; }
 
-		[Export ("location")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPBannerCustomEventDelegate.h", Line = 42)]
+		[Export ("location")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPBannerCustomEventDelegate.h", Line = 42)]
 		CLLocation Location { get; }
 
 		[Export ("bannerCustomEvent:didLoadAd:")]
-		void DidLoadAd (MPBannerCustomEvent cevent, UIView ad);
+		void DidLoadAd (MPBannerCustomEvent mp_event, UIView ad);
 
 		[Export ("bannerCustomEvent:didFailToLoadAdWithError:")]
-		void DidFailToLoadAdWithError (MPBannerCustomEvent cevent, NSError error);
+		void DidFailToLoadAdWithError (MPBannerCustomEvent mp_event, NSError error);
 
 		[Export ("bannerCustomEventWillBeginAction:")]
-		void BannerCustomEventWillBeginAction (MPBannerCustomEvent cevent);
+		void BannerCustomEventWillBeginAction (MPBannerCustomEvent mp_vent);
 
 		[Export ("bannerCustomEventDidFinishAction:")]
-		void BannerCustomEventDidFinishAction (MPBannerCustomEvent cevent);
+		void BannerCustomEventDidFinishAction (MPBannerCustomEvent mp_event);
 
 		[Export ("bannerCustomEventWillLeaveApplication:")]
-		void BannerCustomEventWillLeaveApplication (MPBannerCustomEvent cevent);
+		void BannerCustomEventWillLeaveApplication (MPBannerCustomEvent mp_event);
 
 		[Export ("trackImpression")]
 		void TrackImpression ();
@@ -172,7 +250,7 @@ namespace MoPubSDK {
 		[Export ("didDisplayAd")]
 		void DidDisplayAd ();
 
-		[Export ("enableAutomaticImpressionAndClickTracking")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPBannerCustomEvent.h", Line = 80)]
+		[Export ("enableAutomaticImpressionAndClickTracking")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPBannerCustomEvent.h", Line = 80)]
 		bool EnableAutomaticImpressionAndClickTracking { get; }
 
 		[Export ("delegate", ArgumentSemantic.Assign)]
@@ -214,7 +292,7 @@ namespace MoPubSDK {
 		[Static, Export ("removeSharedInterstitialAdController:")]
 		void RemoveSharedInterstitialAdController (MPInterstitialAdController controller);
 
-		[Static, Export ("sharedInterstitialAdControllers")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPInterstitialAdController.h", Line = 146)]
+		[Static, Export ("sharedInterstitialAdControllers")]// ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPInterstitialAdController.h", Line = 146)]
 		NSMutableArray SharedInterstitialAdControllers { get; }
 
 		[Export ("customEventDidLoadAd")]
@@ -255,43 +333,6 @@ namespace MoPubSDK {
 		void DismissInterstitial (MPInterstitialAdController interstitial);
 	}
 
-	[Model, BaseType (typeof (NSObject))]
-	public partial interface MPInterstitialCustomEventDelegate {
 
-		//[Export ("location")]//, Verify ("ObjC method massaged into getter property", "/Users/dmast/Documents/sdks/mopub-ios-sdk-1.7/mopub-ios-sdk/MoPubSDK/MPInterstitialCustomEventDelegate.h", Line = 34)]
-		//CLLocation Location { get; }
-
-		[Export ("interstitialCustomEvent:didLoadAd:")]
-		void DidLoadAd (MPInterstitialCustomEvent customEvent, NSObject ad);
-
-		[Export ("interstitialCustomEvent:didFailToLoadAdWithError:")]
-		void DidFailToLoadAdWithError (MPInterstitialCustomEvent customEvent, NSError error);
-
-		[Export ("interstitialCustomEventDidExpire:")]
-		void InterstitialCustomEventDidExpire (MPInterstitialCustomEvent customEvent);
-
-		[Export ("interstitialCustomEventWillAppear:")]
-		void InterstitialCustomEventWillAppear (MPInterstitialCustomEvent customEvent);
-
-		[Export ("interstitialCustomEventDidAppear:")]
-		void InterstitialCustomEventDidAppear (MPInterstitialCustomEvent customEvent);
-
-		[Export ("interstitialCustomEventWillDisappear:")]
-		void InterstitialCustomEventWillDisappear (MPInterstitialCustomEvent customEvent);
-
-		[Export ("interstitialCustomEventDidDisappear:")]
-		void InterstitialCustomEventDidDisappear (MPInterstitialCustomEvent customEvent);
-
-		[Export ("interstitialCustomEventDidReceiveTapEvent:")]
-		void InterstitialCustomEventDidReceiveTapEvent (MPInterstitialCustomEvent customEvent);
-
-		[Export ("interstitialCustomEventWillLeaveApplication:")]
-		void InterstitialCustomEventWillLeaveApplication (MPInterstitialCustomEvent customEvent);
-
-		[Export ("trackImpression")]
-		void TrackImpression ();
-
-		[Export ("trackClick")]
-		void TrackClick ();
-	}
 }
+
